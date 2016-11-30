@@ -993,18 +993,23 @@ function() {
 	//------------ COMPLETE THIS EXPRESSION --------------
 	return movieLists.concatMap(function(movieList) {
       return movieList.videos.concatMap(function(video) {
-      	return Array.zip(video.boxarts.reduce(function(boxartMap, current) { 
+      	return Array.zip(
+      		video.boxarts.reduce(function(boxartMap, current) { 
               if (boxartMap.width * boxartMap.height < current.width * current.height) {
                 return boxartMap
               } else {
                 return current
               }
-            }), video.interestingMoments.filter(function(moment) {
+            }), 
+
+      		video.interestingMoments.filter(function(moment) {
               return moment.type === "Middle"
-        }), function(boxart, interestingMoment) {
-          return {id: video.id, title: video.title, time: interestingMoment.time, url: boxart.url};
-        });
-    });
+	        }), 
+
+	        function(boxart, interestingMoment) {
+	      	  return {id: video.id, title: video.title, time: interestingMoment.time, url: boxart.url};
+	        });
+    	});
 	});
 }
 	//test	
